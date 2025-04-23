@@ -21,6 +21,7 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     RouterModule.forRoot([]), // isso resolve o erro do router-outlet
     HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

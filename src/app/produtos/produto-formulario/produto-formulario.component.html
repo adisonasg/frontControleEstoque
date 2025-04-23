@@ -1,1 +1,13 @@
-<p>produto-formulario works!</p>
+<h2>Cadastrar Produto</h2>
+<form (ngSubmit)="salvarProduto()" #produtoForm="ngForm">
+  <label for="nome">Nome:</label>
+  <input id="nome" name="nome" [(ngModel)]="produto.nome" required />
+
+  <label for="preco">Preço:</label>
+  <input id="preco" name="preco" type="number" [(ngModel)]="produto.preco" required />
+
+  <label for="quantidade">Quantidade:</label>
+  <input id="quantidade" name="quantidade" type="number" [(ngModel)]="produto.quantidade" required />
+
+  <button type="submit">Salvar</button>
+</form>

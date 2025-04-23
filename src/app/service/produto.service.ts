@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 export interface Produto {
   id: number;
@@ -14,7 +15,8 @@ export interface Produto {
 })
 export class ProdutoService {
 
-  private apiUrl = 'https://localhost:5001/api/produtos'; // ajuste a URL se necessário
+  private apiUrl = 'http://localhost:5289/api/produtos';
+
 
   constructor(private http: HttpClient) { }
 
