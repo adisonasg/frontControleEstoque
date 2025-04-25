@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -10,20 +12,31 @@ import { ProdutoListaComponent } from './produtos/produto-lista/produto-lista.co
 import { ProdutoFormularioComponent } from './produtos/produto-formulario/produto-formulario.component';
 import { AppComponent } from './app.component';
 
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { LoginComponent } from './auth/login/login.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     ProdutoFormularioComponent,
     ProdutoListaComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot([]), // isso resolve o erro do router-outlet
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
     HttpClientModule,
-    FormsModule
+    RouterModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
