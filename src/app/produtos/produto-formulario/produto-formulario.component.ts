@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ProdutoService } from '../../service/produto.service';
 import { Produto } from '../../model/produto.model';
 
@@ -8,7 +9,7 @@ import { Produto } from '../../model/produto.model';
   styleUrls: ['./produto-formulario.component.scss'],
   standalone: false,
 })
-export class ProdutoFormularioComponent {
+export class ProdutoFormularioComponent implements OnInit {
   produto: Produto = {
     id: 0,
     nome: '',
@@ -16,18 +17,38 @@ export class ProdutoFormularioComponent {
     quantidade: 0
   };
 
-  constructor(private produtoService: ProdutoService) {}
+  constructor(
+    private produtoService: ProdutoService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      const idNumber = parseInt(id, 10);
+      this.produtoService.getProdutoPorId(idNumber).subscribe({
+        next: (produto) => {
+          this.produto = produto;
+        },
+        error: () => {
+          alert('Erro ao carregar o produto.');
+        }
+      });
+    }
+  }
 
   salvarProduto(): void {
-    this.produtoService.adicionarProduto(this.produto).subscribe({
+    const operacao = this.produto.id === 0
+      ? this.produtoService.adicionarProduto(this.produto)
+      : this.produtoService.atualizarProduto(this.produto.id, this.produto);
+
+    operacao.subscribe({
       next: () => {
-        alert('Produto adicionado com sucesso!');
-        this.produto = { id: 0, nome: '', preco: 0, quantidade: 0 }; // limpa o form
+        alert(this.produto.id === 0 ? 'Produto adicionado!' : 'Produto atualizado!');
+        this.produto = { id: 0, nome: '', preco: 0, quantidade: 0 };
       },
-      error: err => {
-        console.error('Erro ao adicionar produto', err);
-        alert('Erro ao adicionar produto');
-      }
+      error: () => alert('Erro ao salvar produto')
     });
   }
 }

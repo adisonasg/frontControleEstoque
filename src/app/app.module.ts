@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { LoginComponent } from './auth/login/login.component';
+import { CadastroComponent } from './cadastro/cadastro.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { LoginComponent } from './auth/login/login.component';
     ProdutoFormularioComponent,
     ProdutoListaComponent,
     LoginComponent,
+    CadastroComponent,
   ],
   imports: [
     BrowserModule,

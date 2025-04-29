@@ -1,13 +1,79 @@
-<h2>Cadastrar Produto</h2>
-<form (ngSubmit)="salvarProduto()" #produtoForm="ngForm">
-  <label for="nome">Nome:</label>
-  <input id="nome" name="nome" [(ngModel)]="produto.nome" required />
+<div class="container-fluid p-0">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-4">
+    <a class="navbar-brand" href="#">Sistema de Estoque</a>
+  </nav>
 
-  <label for="preco">Preço:</label>
-  <input id="preco" name="preco" type="number" [(ngModel)]="produto.preco" required />
+  <!-- Conteúdo -->
+  <div class="container mt-5">
+    <div class="card shadow">
+      <div class="card-body">
+        <h3 class="card-title mb-4">Cadastro de Produto</h3>
 
-  <label for="quantidade">Quantidade:</label>
-  <input id="quantidade" name="quantidade" type="number" [(ngModel)]="produto.quantidade" required />
+        <form (ngSubmit)="salvarProduto()" #produtoForm="ngForm">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="nome" class="form-label">Nome:</label>
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                class="form-control"
+                [(ngModel)]="produto.nome"
+                required
+                #nome="ngModel"
+                [ngClass]="{ 'is-invalid': nome.invalid && nome.touched }"
+              />
+              <div class="invalid-feedback" *ngIf="nome.invalid && nome.touched">
+                O nome é obrigatório.
+              </div>
+            </div>
 
-  <button type="submit">Salvar</button>
-</form>
+            <div class="col-md-3">
+              <label for="preco" class="form-label">Preço:</label>
+              <input
+                type="number"
+                id="preco"
+                name="preco"
+                class="form-control"
+                [(ngModel)]="produto.preco"
+                required
+                #preco="ngModel"
+                [ngClass]="{ 'is-invalid': preco.invalid && preco.touched }"
+              />
+              <div class="invalid-feedback" *ngIf="preco.invalid && preco.touched">
+                O preço é obrigatório.
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label for="quantidade" class="form-label">Quantidade:</label>
+              <input
+                type="number"
+                id="quantidade"
+                name="quantidade"
+                class="form-control"
+                [(ngModel)]="produto.quantidade"
+                required
+                #quantidade="ngModel"
+                [ngClass]="{ 'is-invalid': quantidade.invalid && quantidade.touched }"
+              />
+              <div class="invalid-feedback" *ngIf="quantidade.invalid && quantidade.touched">
+                A quantidade é obrigatória.
+              </div>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary" [disabled]="produtoForm.invalid">
+              Salvar Produto
+            </button>
+            <a routerLink="/produtos" class="btn btn-outline-secondary">
+              Voltar para lista de produtos
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Produto, ProdutoService } from '../../service/produto.service';
-
+import { AuthService } from '../../service/auth.service'; // <-- Adicione isso
 
 @Component({
   selector: 'app-produto-lista',
@@ -10,7 +11,11 @@ import { Produto, ProdutoService } from '../../service/produto.service';
 export class ProdutoListaComponent implements OnInit {
   produtos: Produto[] = [];
 
-  constructor(private produtoService: ProdutoService) {}
+  constructor(
+    private produtoService: ProdutoService,
+    private authService: AuthService, // <-- Injeta o serviço de autenticação
+    private router: Router            // <-- Injeta o roteador
+  ) {}
 
   ngOnInit(): void {
     this.carregarProdutos();
@@ -28,5 +33,10 @@ export class ProdutoListaComponent implements OnInit {
         this.carregarProdutos();
       });
     }
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

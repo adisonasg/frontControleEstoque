@@ -1,0 +1,19 @@
+<div class="cadastro-container">
+    <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label>Email:</label>
+        <input type="email" formControlName="email" />
+      </div>
+  
+      <div>
+        <label>Senha:</label>
+        <input type="password" formControlName="senha" />
+      </div>
+  
+      <div *ngIf="erro" style="color: red;">{{ erro }}</div>
+      <div *ngIf="sucesso" style="color: green;">{{ sucesso }}</div>
+  
+      <button type="submit" [disabled]="cadastroForm.invalid">Cadastrar</button>
+    </form>
+  </div>
+  

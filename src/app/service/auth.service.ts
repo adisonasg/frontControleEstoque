@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,13 +16,13 @@ export class AuthService {
     private cookieService: CookieService
   ) {}
 
-  login(credentials: { email: string; senha: string }) {
-    return this.http.post<{ token: string }>(`${this.apiUrl}/login`, credentials);
-  }
+  login(credentials: { email: string, senha: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, credentials);
+  }  
 
   logout() {
-    this.cookieService.delete(this.tokenKey);
-    this.router.navigate(['/login']);
+    // Remove o token do cookie ou armazenamento
+    document.cookie = 'jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   }
 
   setToken(token: string) {
@@ -35,4 +36,9 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
+
+  register(dados: { email: string; senha: string }) {
+    return this.http.post(`${this.apiUrl}/register`, dados);
+  }
+  
 }

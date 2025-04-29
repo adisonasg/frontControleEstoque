@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
 
@@ -12,6 +11,7 @@ import { AuthService } from '../../service/auth.service';
 export class LoginComponent {
   loginForm: FormGroup;
   erro: string = '';
+  carregando: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -20,12 +20,15 @@ export class LoginComponent {
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      senha: ['', Validators.required]
+      senha: ['', Validators.required],
     });
   }
 
   onSubmit() {
     if (this.loginForm.invalid) return;
+
+    this.erro = '';
+    this.carregando = true;
 
     const credentials = this.loginForm.value;
     this.authService.login(credentials).subscribe({
@@ -35,6 +38,9 @@ export class LoginComponent {
       },
       error: () => {
         this.erro = 'Login inválido. Verifique email e senha.';
+      },
+      complete: () => {
+        this.carregando = false;
       }
     });
   }

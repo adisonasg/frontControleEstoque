@@ -4,6 +4,7 @@ import { ProdutoFormularioComponent } from './produtos/produto-formulario/produt
 import { ProdutoListaComponent } from './produtos/produto-lista/produto-lista.component'; // IMPORTA AQUI
 import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './auth/login/login.component';
+import { CadastroComponent } from './cadastro/cadastro.component';
 
 
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'produtos', component: ProdutoListaComponent, canActivate: [AuthGuard]},
   { path: 'produtos/novo', component: ProdutoFormularioComponent },
-  { path: 'produtos/editar/:id', component: ProdutoFormularioComponent }
+  { path: 'produtos/editar/:id', component: ProdutoFormularioComponent },
+  { path: 'cadastro', component: CadastroComponent }
 ];
 
 @NgModule({
